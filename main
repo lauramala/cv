@@ -1,0 +1,214 @@
+<html>
+<head>
+  <title>Laura Malagodi.js</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+  	<script src="censustracts.js"></script>
+	<style type="text/css">
+	 	html, body, #map{
+	 		height: 100%;
+	 		padding: 0;
+	 		margin: 0;
+	 	}
+		
+		
+.info {
+    padding: 10px 12px;
+    font: 17px/19px Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.info2 {
+    padding: 20px 22px;
+    font: 17px/19px Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 0px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+	</style>
+
+	
+</head>
+<body>
+
+<div align="right">
+<a href="C:/Users/Laura/Desktop/java/leaf-orange.png" download="C:/Users/Laura/Desktop/java/leaf-orange.png">click me</a>
+</div>
+
+<div id='map'></div>
+
+<script>
+	var cities1 = L.layerGroup();
+	var cities2 = L.layerGroup();
+	var cities3 = L.layerGroup();
+	
+	
+	
+
+	
+var LeafIcon = L.Icon.extend({
+    options: {
+        shadowUrl:  'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+    }
+});
+	
+	
+    greenIcon = new LeafIcon({iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png'}),
+    redIcon = new LeafIcon({iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png'});
+	violetIcon = new LeafIcon({iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png'});
+	
+	L.icon = function (options) {
+    return new L.Icon(options);
+};
+
+
+	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+	var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
+		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
+
+	var map = L.map('map', {
+		zoomControl:false,
+		center: [40.73, -25.99],
+		zoom: 4,
+		layers: [grayscale, cities1, cities2, cities3]
+	});
+	
+
+	
+	var atm = L.marker([45.45, 9.09], {icon: violetIcon}).bindPopup('ATM - intern').addTo(cities1),
+		amazon    = L.marker([49.6, 6.13], {icon: violetIcon}).bindPopup('Amazon - intern').addTo(cities1),
+		tesi    = L.marker([40.7, -73.9], {icon: violetIcon}).bindPopup('NYC firm - MSc thesis project').addTo(cities1);
+		
+	var poli = L.marker([45.45, 9.09],{icon: redIcon}).bindPopup('Politecnico di Milano </b><br /> Mathematical Engineering - Bachelor').addTo(cities2),
+		polimi    = L.marker([45.6, 8.13],{icon: redIcon}).bindPopup('Politecnico di Milano </b><br /> Mathematical Engineering - Masters').addTo(cities2),
+		ism    = L.marker([44.7, 7.9],{icon: redIcon}).bindPopup('ism').addTo(cities2);
+
+		
+				
+	var romania  = L.marker([44.42, 26.16],{icon: greenIcon}).bindPopup('Romania').addTo(cities3),
+		laquila    = L.marker([42.3506, 13.399],{icon: greenIcon}).bindPopup('L\'Aquila').addTo(cities3),
+		london    = L.marker([51.508, -0.076],{icon: greenIcon}).bindPopup('London').addTo(cities3);
+	
+
+	var baseLayers = {
+		"Grayscale": grayscale
+		};
+
+	var overlays = {
+		"Work experience": cities1,
+		"Education": cities2,
+		"Personal experiences": cities3
+	};
+
+	L.control.layers(baseLayers, overlays).addTo(map);
+	
+	
+var mm = null;
+var scritta = 0;
+	
+	bigjobs = new Map();
+		bigjobs.set('ATM - intern', {"details1": 'During my internship at the public transport for Milan company,', "details2": 'blbablablabalaballabblbablablabalaballabalbaablbablbablablabalalabl', "details3":'aablbablbablablabalaballablablablablala'});
+		bigjobs.set('Amazon - intern', {"details1": 'Ho fatto lo stage da amazon', "details2": 'blbablablabalaballabalbalabla', "details3": 'ablbalablablablala'});
+		bigjobs.set('NYC firm - MSc thesis project', {"details1": 'Ho fatto la tesi per una azienda', "details2": 'americana, blbablablabalaballab', "details3": 'aalbalablablbalablablablala'});
+
+		
+		
+		school = new Map();
+		school.set('Politecnico di Milano </b><br /> Mathematical Engineering - Bachelor', {"details1": 'Ho fatto lo triennale', "details2": 'blbablablabalaballabalbalabl', "details3":'aablbalablablablala'});
+		school.set('Politecnico di Milano </b><br /> Mathematical Engineering - Masters', {"details1": 'Ho fatto la magistrale', "details2": 'blbablablabalaballabalbalabla', "details3": 'ablbalablablablala'});
+		school.set('ism', {"details1": 'Ho fatto la tesi per una azienda', "details2": 'americana, blbablablabalaballab', "details3": 'aalbalablablbalablablablala'});
+
+		personal = new Map();
+		personal.set('Romania', {"details1": 'Ho fatto lo triennale', "details2": 'blbablablabalaballabalbalabl', "details3":'aablbalablablablala'});
+		personal.set('L\'Aquila', {"details1": 'Ho fatto la magistrale', "details2": 'blbablablabalaballabalbalabla', "details3": 'ablbalablablablala'});
+		personal.set('London', {"details1": 'Ho fatto la tesi per una azienda', "details2": 'americana, blbablablabalaballab', "details3": 'aalbalablablbalablablablala'});
+
+	
+var legenda = L.control({position: 'topleft'});
+
+		legenda.onAdd = function (map) {
+				var div = L.DomUtil.create('div', 'info2'),
+					text = [],
+					text = 'Laura   Malagodi';
+			div.innerHTML = text;
+			return div;
+		};
+
+
+		legenda.addTo(map);
+
+
+		//name.addTo(map);
+	
+	var legend = L.control({position: 'bottomright'});
+
+		legend.onAdd = function (map) {
+			if (scritta == 0){
+				var div = L.DomUtil.create('div', 'info'),
+					text = [],
+					text = 'Select from top right corner';
+			}
+			
+			if (scritta == 1 && bigjobs.has(mm)){
+				var div = L.DomUtil.create('div', 'info'),
+					text = [],
+		
+					text = bigjobs.get(mm).details1 +  '</b><br />' + bigjobs.get(mm).details2 +  '</b><br />' + bigjobs.get(mm).details3;
+			}
+			
+			if (scritta == 1 && school.has(mm)){
+				var div = L.DomUtil.create('div', 'info'),
+					text = [],
+		
+					text = school.get(mm).details1 +  '</b><br />' + school.get(mm).details2 +  '</b><br />' + school.get(mm).details3;
+			}
+			
+			if (scritta == 1 && personal.has(mm)){
+				var div = L.DomUtil.create('div', 'info'),
+					text = [],
+		
+					text = personal.get(mm).details1 +  '</b><br />' + personal.get(mm).details2 +  '</b><br />' + personal.get(mm).details3;
+			}
+			div.innerHTML = text;
+			return div;
+		};
+
+
+		legend.addTo(map);
+		
+		
+		
+		map.on('popupopen', function(e) {
+			console.log("opennn");
+				mm = e.popup._source._popup._content;
+				scritta=1;
+				map.removeControl(legend);
+				scritta = 1;
+				legend.addTo(map);
+
+		});
+</script>
+
+
+
+</body>
+</html>
