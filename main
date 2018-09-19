@@ -42,9 +42,6 @@
 </head>
 <body>
 
-<div align="right">
-<a href="C:/Users/Laura/Desktop/java/leaf-orange.png" download="C:/Users/Laura/Desktop/java/leaf-orange.png">click me</a>
-</div>
 
 <div id='map'></div>
 
